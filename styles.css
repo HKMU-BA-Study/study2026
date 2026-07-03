@@ -692,6 +692,12 @@ h1 {
     color: #ffffff;
 }
 
+.contact-fallback {
+    color: var(--muted);
+    font-size: 0.94rem;
+    margin-top: 14px;
+}
+
 .funding {
     background: #fbfcf8;
     border-left: 4px solid var(--gold);
