@@ -658,21 +658,6 @@ h1 {
     color: #ffffff;
 }
 
-.topic-list {
-    display: grid;
-    gap: 10px;
-    list-style: none;
-    padding-left: 0;
-}
-
-.topic-list li {
-    background: var(--surface-soft);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    margin-bottom: 0;
-    padding: 12px 14px;
-}
-
 .funding {
     background: #fbfcf8;
     border-left: 4px solid var(--gold);
