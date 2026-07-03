@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,53 +7,59 @@
     <title>關於 / About - Exploring the Dual Effects of Artificial Intelligence Nudging</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
+    <script src="language.js" defer></script>
 </head>
 <body>
-    <a class="skip-link" href="#main-content">跳至主要內容 / Skip to content</a>
+    <a class="skip-link" href="#main-content"><span class="lang-en">Skip to content</span><span class="lang-zh">跳至主要內容</span></a>
     <div class="layout">
         <aside class="sidebar" aria-label="Site navigation">
             <div class="brand">
                 <div class="brand-mark">AI</div>
                 <div>
-                    <div class="brand-title">AI 助推與可持續消費 / AI Nudging for Sustainable Consumption</div>
-                    <div class="brand-subtitle">香港旅遊及酒店業研究 / Hong Kong tourism and hospitality research</div>
+                    <div class="brand-title"><span class="lang-en">AI Nudging for Sustainable Consumption</span><span class="lang-zh">AI 助推與可持續消費</span></div>
+                    <div class="brand-subtitle"><span class="lang-en">Hong Kong tourism and hospitality research</span><span class="lang-zh">香港旅遊及酒店業研究</span></div>
                 </div>
             </div>
-            <div class="nav-label">導航 / Navigation</div>
+            <div class="language-switch" aria-label="Language switch">
+                <button type="button" data-lang-button="en" aria-pressed="true">EN</button>
+                <button type="button" data-lang-button="zh-Hant" aria-pressed="false">繁中</button>
+            </div>
+            <div class="nav-label"><span class="lang-en">Navigation</span><span class="lang-zh">導航</span></div>
             <nav>
                 <ul>
-                    <li><a href="index.html">首頁 / Home</a></li>
-                    <li><a class="active" aria-current="page" href="about.html">關於 / About</a></li>
-                    <li><a href="team.html">團隊 / Team</a></li>
-                    <li><a href="updates.html">項目進展 / Updates</a></li>
-                    <li><a href="impact.html">潛在影響 / Potential Impact</a></li>
+                    <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-zh">首頁</span></a></li>
+                    <li><a class="active" aria-current="page" href="about.html"><span class="lang-en">About</span><span class="lang-zh">關於</span></a></li>
+                    <li><a href="team.html"><span class="lang-en">Team</span><span class="lang-zh">團隊</span></a></li>
+                    <li><a href="updates.html"><span class="lang-en">Updates</span><span class="lang-zh">項目進展</span></a></li>
+                    <li><a href="impact.html"><span class="lang-en">Potential Impact</span><span class="lang-zh">潛在影響</span></a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="content" id="main-content">
             <header class="page-header">
-                <p class="kicker">關於本項目 / About This Project</p>
+                <p class="kicker"><span class="lang-en">About This Project</span><span class="lang-zh">關於本項目</span></p>
                 <h1 class="bilingual-heading">
-                    <span>探索人工智能助推的雙重效應</span>
-                    <span>Exploring the Dual Effects of Artificial Intelligence Nudging</span>
+                    <span class="lang-en">Exploring the Dual Effects of Artificial Intelligence Nudging</span>
+                    <span class="lang-zh">探索人工智能助推的雙重效應</span>
                 </h1>
-                <p>人工智能助推對香港旅遊及酒店業可持續消費的雙重效應研究。 / A study of the dual effects of AI nudging on sustainable consumption in Hong Kong’s tourism and hospitality industry.</p>
+                <p class="lang-en">A study of the dual effects of AI nudging on sustainable consumption in Hong Kong’s tourism and hospitality industry.</p>
+                <p class="lang-zh">人工智能助推對香港旅遊及酒店業可持續消費的雙重效應研究。</p>
             </header>
 
-            <section class="grid two" aria-label="Bilingual project description">
+            <section class="section" aria-label="Project description">
                 <article class="panel">
-                    <h2>項目背景</h2>
-                    <p>人工智能正快速重塑消費者決策，亦為旅遊及酒店業回應可持續發展挑戰帶來新的可能。本項目聚焦於人工智能助推如何影響香港旅遊及酒店業中的可持續消費行為，並探討其相較於傳統助推方式的成效、作用機制與適用邊界。</p>
-                    <p>研究特別關注人工智能助推的「雙重效應」：一方面，個人化及情境化的建議可能提升消費者對可持續選項的相關性感知，從而促進綠色選擇；另一方面，若消費者感到自主性受限、演算法目的不透明，或企業利益凌駕個人利益，助推亦可能引發反感或降低信任。</p>
-                    <p>透過實證研究，本項目旨在為政策制定者、業界及公眾提供以證據為本的見解，協助設計更有效、透明並尊重消費者自主權的人工智能助推策略。</p>
-                </article>
-
-                <article class="panel">
-                    <h2>Project Background</h2>
-                    <p>Artificial intelligence is rapidly reshaping consumer decision-making and creating new opportunities for the tourism and hospitality industry to address sustainability challenges. This project examines how AI nudging affects sustainable consumption in Hong Kong’s tourism and hospitality sector, with attention to its effectiveness, mechanisms, and boundaries compared with traditional nudging approaches.</p>
-                    <p>The research focuses on the dual effects of AI nudging. On one hand, personalized and context-aware recommendations may increase perceived relevance and encourage greener choices. On the other hand, nudges may backfire when consumers feel their autonomy is constrained, when algorithmic intentions are unclear, or when business interests appear to override consumer goals.</p>
-                    <p>Through empirical studies, the project aims to provide evidence-based insights for policymakers, industry practitioners, and the public, supporting AI nudging strategies that are effective, transparent, and respectful of consumer autonomy.</p>
+                    <h2><span class="lang-en">Project Background</span><span class="lang-zh">項目背景</span></h2>
+                    <div class="lang-en">
+                        <p>Artificial intelligence is rapidly reshaping consumer decision-making and creating new opportunities for the tourism and hospitality industry to address sustainability challenges. This project examines how AI nudging affects sustainable consumption in Hong Kong’s tourism and hospitality sector, with attention to its effectiveness, mechanisms, and boundaries compared with traditional nudging approaches.</p>
+                        <p>The research focuses on the dual effects of AI nudging. On one hand, personalized and context-aware recommendations may increase perceived relevance and encourage greener choices. On the other hand, nudges may backfire when consumers feel their autonomy is constrained, when algorithmic intentions are unclear, or when business interests appear to override consumer goals.</p>
+                        <p>Through empirical studies, the project aims to provide evidence-based insights for policymakers, industry practitioners, and the public, supporting AI nudging strategies that are effective, transparent, and respectful of consumer autonomy.</p>
+                    </div>
+                    <div class="lang-zh">
+                        <p>人工智能正快速重塑消費者決策，亦為旅遊及酒店業回應可持續發展挑戰帶來新的可能。本項目聚焦於人工智能助推如何影響香港旅遊及酒店業中的可持續消費行為，並探討其相較於傳統助推方式的成效、作用機制與適用邊界。</p>
+                        <p>研究特別關注人工智能助推的「雙重效應」：一方面，個人化及情境化的建議可能提升消費者對可持續選項的相關性感知，從而促進綠色選擇；另一方面，若消費者感到自主性受限、演算法目的不透明，或企業利益凌駕個人利益，助推亦可能引發反感或降低信任。</p>
+                        <p>透過實證研究，本項目旨在為政策制定者、業界及公眾提供以證據為本的見解，協助設計更有效、透明並尊重消費者自主權的人工智能助推策略。</p>
+                    </div>
                 </article>
             </section>
         </main>

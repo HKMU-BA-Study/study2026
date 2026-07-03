@@ -50,6 +50,22 @@ body {
     transform: translateY(0);
 }
 
+.lang-en {
+    display: revert;
+}
+
+.lang-zh {
+    display: none;
+}
+
+html[lang="zh-Hant"] .lang-en {
+    display: none;
+}
+
+html[lang="zh-Hant"] .lang-zh {
+    display: revert;
+}
+
 a {
     color: var(--green);
     text-decoration-thickness: 0.08em;
@@ -108,6 +124,35 @@ a:hover {
     color: var(--muted);
     font-size: 0.84rem;
     margin-top: 7px;
+}
+
+.language-switch {
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: 1fr 1fr;
+    margin: 18px 8px;
+    padding: 4px;
+}
+
+.language-switch button {
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 800;
+    min-height: 34px;
+}
+
+.language-switch button.active {
+    background: #ffffff;
+    box-shadow: 0 6px 14px rgba(23, 33, 29, 0.08);
+    color: var(--green-dark);
 }
 
 .nav-label {
@@ -233,6 +278,30 @@ h1 {
     font-weight: 800;
     letter-spacing: 0.04em;
     margin-top: 18px;
+}
+
+.project-facts {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+    max-width: 720px;
+}
+
+.project-fact {
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.92);
+    padding: 12px 14px;
+}
+
+.project-fact strong {
+    color: #ffffff;
+    display: block;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
 }
 
 .lede {
