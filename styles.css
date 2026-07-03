@@ -123,6 +123,25 @@ a:hover {
     margin-top: 7px;
 }
 
+.hkmu-logo-link {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: block;
+    margin: 18px 8px;
+    padding: 10px 12px;
+}
+
+.hkmu-logo-link:hover {
+    border-color: rgba(31, 111, 74, 0.36);
+}
+
+.hkmu-logo {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
 .language-switch {
     background: var(--surface-soft);
     border: 1px solid var(--line);
