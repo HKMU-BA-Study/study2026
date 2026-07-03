@@ -68,6 +68,12 @@ html[lang="zh-Hans"] .lang-zh {
     display: revert;
 }
 
+html[lang="en"] body .lang-zh,
+html[lang="zh-Hant"] body .lang-en,
+html[lang="zh-Hans"] body .lang-en {
+    display: none !important;
+}
+
 a {
     color: var(--green);
     text-decoration-thickness: 0.08em;
