@@ -128,6 +128,25 @@ a:hover {
     margin-top: 7px;
 }
 
+.hkmu-logo-link {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: block;
+    margin: 18px 8px;
+    padding: 10px 12px;
+}
+
+.hkmu-logo-link:hover {
+    border-color: rgba(31, 111, 74, 0.36);
+}
+
+.hkmu-logo {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
 .language-switch {
     background: var(--surface-soft);
     border: 1px solid var(--line);
@@ -441,10 +460,14 @@ h1 {
 }
 
 .institution-strip {
+    align-items: center;
     background: var(--green-dark);
     border-radius: 8px;
     box-shadow: var(--shadow);
     color: #ffffff;
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
     margin: 32px 0;
     padding: 26px;
 }
@@ -458,6 +481,16 @@ h1 {
 .institution-strip p {
     color: rgba(255, 255, 255, 0.82);
     font-size: 1.08rem;
+}
+
+.institution-logo {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(10, 26, 20, 0.22);
+    flex: 0 0 230px;
+    max-width: 230px;
+    padding: 12px;
+    width: 230px;
 }
 
 .role-tag {
@@ -776,6 +809,17 @@ hr {
 
     .profile-lead {
         grid-template-columns: 1fr;
+    }
+
+    .institution-strip {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .institution-logo {
+        flex-basis: auto;
+        max-width: 260px;
+        width: 100%;
     }
 
     .profile-photo {
