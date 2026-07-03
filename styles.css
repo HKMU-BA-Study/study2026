@@ -58,11 +58,13 @@ body {
     display: none;
 }
 
-html[lang="zh-Hant"] .lang-en {
+html[lang="zh-Hant"] .lang-en,
+html[lang="zh-Hans"] .lang-en {
     display: none;
 }
 
-html[lang="zh-Hant"] .lang-zh {
+html[lang="zh-Hant"] .lang-zh,
+html[lang="zh-Hans"] .lang-zh {
     display: revert;
 }
 
@@ -132,7 +134,7 @@ a:hover {
     border-radius: 8px;
     display: grid;
     gap: 4px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     margin: 18px 8px;
     padding: 4px;
 }
@@ -144,7 +146,7 @@ a:hover {
     color: var(--muted);
     cursor: pointer;
     font: inherit;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     font-weight: 800;
     min-height: 34px;
 }
