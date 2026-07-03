@@ -101,18 +101,13 @@ a:hover {
     padding: 0 8px 20px;
 }
 
-.brand-mark {
-    align-items: center;
-    background: var(--green-dark);
-    border-radius: 999px;
-    color: #ffffff;
-    display: inline-flex;
-    font-size: 0.82rem;
-    font-weight: 800;
-    height: 38px;
-    justify-content: center;
-    margin-bottom: 14px;
-    width: 38px;
+.brand-wordmark {
+    color: var(--green-dark);
+    font-size: 1.04rem;
+    font-weight: 850;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    margin-bottom: 12px;
 }
 
 .brand-title {
@@ -770,7 +765,7 @@ hr {
         padding: 0 0 14px;
     }
 
-    .brand-mark {
+    .brand-wordmark {
         flex: 0 0 auto;
         margin-bottom: 0;
     }
