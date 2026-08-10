@@ -1,11 +1,11 @@
 import os
 import random
 from huggingface_hub import InferenceClient
+from dotenv import load_dotenv
 
 # 初始化 Hugging Face Inference Client
-# 會自動讀取系統環境變數中的 HF_TOKEN
-# 也可以直接帶入 parameter: InferenceClient(token="hf_xxxx")
-client = InferenceClient(api_key="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")
+load_dotenv()
+client = InferenceClient(api_key=os.getenv("HF_TOKEN"))
 
 
 def calculate_score(product, preferences):
