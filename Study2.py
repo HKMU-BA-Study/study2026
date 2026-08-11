@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # 初始化 Hugging Face Inference Client
 load_dotenv()
-client = InferenceClient(api_key=os.getenv("HF_TOKEN"))
+client = InferenceClient(token=os.getenv("HF_TOKEN"))
 
 
 def calculate_score(product, preferences):
