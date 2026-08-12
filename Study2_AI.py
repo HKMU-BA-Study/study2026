@@ -1,8 +1,9 @@
 import os
 import json
 import re
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from huggingface_hub import InferenceClient
 from dotenv import load_dotenv
@@ -19,6 +20,14 @@ client = InferenceClient(token=HF_TOKEN)
 app = FastAPI(
     title="Study 2 AI Nudging API",
     description="Render.com API Endpoint for HF AI Nudging Recommendations"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],             # 允許所有來源（包含 localhost:8000）
+    allow_credentials=True,
+    allow_methods=["*"],             # 允許所有 HTTP 方法 (POST, GET 等)
+    allow_headers=["*"],             # 允許所有 Headers
 )
 
 
