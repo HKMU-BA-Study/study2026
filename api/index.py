@@ -8,35 +8,31 @@ from pydantic import BaseModel
 from huggingface_hub import InferenceClient
 from dotenv import load_dotenv
 
-# 1. 初始化與環境變數載入
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
-
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 client = InferenceClient(token=HF_TOKEN)
 
+# 💡 關閉預設斜線重定向
 app = FastAPI(
     title="Study 2 AI Nudging API",
-    description="Vercel API Endpoint for HF AI Nudging Recommendations",
     redirect_slashes=False
 )
 
+# 💡 設定 CORS 允許 OPTIONS 與 POST
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
-# 2. 定義 Request 格式
 class RecommendationRequest(BaseModel):
     products: List[Dict[str, Any]]
     preferences: Dict[str, Any]
 
-
-# 3. 核心推薦邏輯
 def get_ai_recommendations_from_hf(products: List[Dict[str, Any]], preferences: Dict[str, Any]) -> List[Dict[str, Any]]:
     simplified_products = [
         {"id": p.get("id"), "name": p.get("name"), "price": p.get("price"), "isEco": p.get("isEco")}
@@ -44,22 +40,15 @@ def get_ai_recommendations_from_hf(products: List[Dict[str, Any]], preferences: 
     ]
 
     prompt = f"""
-You are an AI recommender system.
-Select and rank the top 3 best matching products based on user preferences.
+You are an AI recommender system. Select top 3 products.
+User preferences: {json.dumps(preferences, ensure_ascii=False)}
+Products: {json.dumps(simplified_products, ensure_ascii=False)}
 
-[User Preferences]
-{json.dumps(preferences, ensure_ascii=False)}
-
-[Available Products]
-{json.dumps(simplified_products, ensure_ascii=False)}
-
-[Task]
-Select Top 3 products. Write 1 short sentence reason for each.
-Output MUST be strict JSON array with NO markdown formatting:
+Output MUST be a valid JSON array:
 [
-  {{"rank": 1, "item_id": 1, "reason": "Short reason..."}},
-  {{"rank": 2, "item_id": 2, "reason": "Short reason..."}},
-  {{"rank": 3, "item_id": 3, "reason": "Short reason..."}}
+  {{"rank": 1, "item_id": 1, "reason": "Reason 1"}},
+  {{"rank": 2, "item_id": 2, "reason": "Reason 2"}},
+  {{"rank": 3, "item_id": 3, "reason": "Reason 3"}}
 ]
 """
 
@@ -67,7 +56,7 @@ Output MUST be strict JSON array with NO markdown formatting:
         response = client.chat_completion(
             model=MODEL_NAME,
             messages=[
-                {"role": "system", "content": "You are a JSON-only API assistant. Output strictly valid JSON arrays without markdown formatting."},
+                {"role": "system", "content": "Output strictly valid JSON arrays without markdown."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=300,
@@ -81,27 +70,23 @@ Output MUST be strict JSON array with NO markdown formatting:
             content = re.sub(r"\n?```$", "", content)
             content = content.strip()
 
-        recommendations = json.loads(content)
-        return recommendations
+        return json.loads(content)
 
     except Exception as e:
         print(f"Hugging Face API Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# 4. 修正後的路由裝飾器（包含 /api 前綴，確保相容性）
+# 💡 精準配置無斜線與有斜線的路徑，確保不會觸發 307/308 Redirect
 @app.post("/api/recommend")
 @app.post("/api/recommend/")
-@app.post("/recommend")
-@app.post("/recommend/")
 def recommend_products(req: RecommendationRequest):
     if not req.products or len(req.products) < 3:
         raise HTTPException(status_code=400, detail="Products list must contain at least 3 items.")
 
     return get_ai_recommendations_from_hf(req.products, req.preferences)
 
-@app.get("/")
-@app.get("/api")
-@app.get("/api/")
-def read_root():
-    return {"message": "AI Nudging API is Running"}
+@app.get("/api/recommend")
+@app.get("/api/recommend/")
+def test_endpoint():
+    return {"status": "ok", "message": "API endpoint is active"}
