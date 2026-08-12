@@ -29,9 +29,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class RecommendationRequest(BaseModel):
     products: List[Dict[str, Any]]
     preferences: Dict[str, Any]
+
 
 def get_ai_recommendations_from_hf(products: List[Dict[str, Any]], preferences: Dict[str, Any]) -> List[Dict[str, Any]]:
     simplified_products = [
@@ -85,6 +87,7 @@ def recommend_products(req: RecommendationRequest):
         raise HTTPException(status_code=400, detail="Products list must contain at least 3 items.")
 
     return get_ai_recommendations_from_hf(req.products, req.preferences)
+
 
 @app.get("/api/recommend")
 @app.get("/api/recommend/")
