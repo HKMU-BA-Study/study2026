@@ -14,7 +14,6 @@ MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 client = InferenceClient(token=HF_TOKEN)
 
-# 💡 關閉內部斜線轉址
 app = FastAPI(
     title="Study 2 AI Nudging API",
     redirect_slashes=False
@@ -76,7 +75,7 @@ Output MUST be a valid JSON array:
         print(f"Hugging Face API Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-# 💡 通配所有 OPTIONS 預檢，一律回傳 200 OK 且附帶 CORS Header
+# 💡 通配所有 OPTIONS 預檢，一律回傳 200 OK
 @app.options("/{full_path:path}")
 def options_handler(full_path: str):
     res = Response(status_code=200)
@@ -85,20 +84,16 @@ def options_handler(full_path: str):
     res.headers["Access-Control-Allow-Headers"] = "*"
     return res
 
-# 💡 同時匹配 /recommend 與 /api/recommend (含無斜線/有斜線)
-@app.post("/recommend")
-@app.post("/recommend/")
+# 💡 匹配根路徑與完整路徑
+@app.post("/")
 @app.post("/api/recommend")
-@app.post("/api/recommend/")
 def recommend_products(req: RecommendationRequest):
     if not req.products or len(req.products) < 3:
         raise HTTPException(status_code=400, detail="Products list must contain at least 3 items.")
 
     return get_ai_recommendations_from_hf(req.products, req.preferences)
 
-@app.get("/recommend")
-@app.get("/recommend/")
+@app.get("/")
 @app.get("/api/recommend")
-@app.get("/api/recommend/")
 def test_endpoint():
     return {"status": "ok", "message": "API endpoint is active"}
