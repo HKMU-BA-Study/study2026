@@ -12,19 +12,16 @@ from dotenv import load_dotenv
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
 
-# 使用反應速度較快且免費的模型
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 client = InferenceClient(token=HF_TOKEN)
 
-# 💡 加入 redirect_slashes=False 避免 Vercel 觸發 308 重定向
 app = FastAPI(
     title="Study 2 AI Nudging API",
     description="Vercel API Endpoint for HF AI Nudging Recommendations",
     redirect_slashes=False
 )
 
-# 💡 允許跨域存取
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -33,15 +30,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 2. 定義 Request 格式 (Pydantic Schema)
+# 2. 定義 Request 格式
 class RecommendationRequest(BaseModel):
     products: List[Dict[str, Any]]
     preferences: Dict[str, Any]
 
 
-# 3. 由 Hugging Face LLM 做商品分析的核心函式
+# 3. 核心推薦邏輯
 def get_ai_recommendations_from_hf(products: List[Dict[str, Any]], preferences: Dict[str, Any]) -> List[Dict[str, Any]]:
-    # 簡化傳給 LLM 的商品資訊，縮短 LLM 的思考與回應時間（防止 Vercel 10秒超時）
     simplified_products = [
         {"id": p.get("id"), "name": p.get("name"), "price": p.get("price"), "isEco": p.get("isEco")}
         for p in products
@@ -74,7 +70,7 @@ Output MUST be strict JSON array with NO markdown formatting:
                 {"role": "system", "content": "You are a JSON-only API assistant. Output strictly valid JSON arrays without markdown formatting."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=300, # 限制 token 數量以加速生成
+            max_tokens=300,
             temperature=0.2
         )
 
@@ -93,7 +89,9 @@ Output MUST be strict JSON array with NO markdown formatting:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# 4. ✅ 正確的路由裝飾器位置（必須放在對應的 API 函數上方！）
+# 4. 修正後的路由裝飾器（包含 /api 前綴，確保相容性）
+@app.post("/api/recommend")
+@app.post("/api/recommend/")
 @app.post("/recommend")
 @app.post("/recommend/")
 def recommend_products(req: RecommendationRequest):
@@ -103,5 +101,7 @@ def recommend_products(req: RecommendationRequest):
     return get_ai_recommendations_from_hf(req.products, req.preferences)
 
 @app.get("/")
+@app.get("/api")
+@app.get("/api/")
 def read_root():
     return {"message": "AI Nudging API is Running"}
