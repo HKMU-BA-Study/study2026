@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "Study2_AI.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "Study2_AI.py"
+    }
+  ]
+}
