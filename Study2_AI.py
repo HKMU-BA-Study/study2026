@@ -29,7 +29,8 @@ app.add_middleware(
     allow_methods=["*"],             # 允許所有 HTTP 方法 (POST, GET 等)
     allow_headers=["*"],             # 允許所有 Headers
 )
-
+@app.post("/recommend")
+@app.post("/recommend/")
 
 # 2. 定義 Request 格式 (Pydantic Schema)
 class RecommendationRequest(BaseModel):
