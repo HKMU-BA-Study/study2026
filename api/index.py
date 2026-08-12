@@ -14,25 +14,24 @@ MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 client = InferenceClient(token=HF_TOKEN)
 
-# 💡 開啟 redirect_slashes 避免轉址問題
+# 💡 關鍵 1：顯式停用斜線重定向，防止 307/308 Redirect
 app = FastAPI(
-    title="Study 2 AI Nudging API"
+    title="Study 2 AI Nudging API",
+    redirect_slashes=False
 )
 
-# 💡 CORS 設定
+# 💡 關鍵 2：正確設定 CORS
 app.add_middleware(
-    CORSMiddleware,
+    CORSMiddleware, # type: ignore
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
 class RecommendationRequest(BaseModel):
     products: List[Dict[str, Any]]
     preferences: Dict[str, Any]
-
 
 def get_ai_recommendations_from_hf(products: List[Dict[str, Any]], preferences: Dict[str, Any]) -> List[Dict[str, Any]]:
     simplified_products = [
@@ -78,13 +77,12 @@ Output MUST be a valid JSON array:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# 💡 顯式回覆 OPTIONS Preflight 請求，杜絕 308 轉址
-@app.options("/api/recommend")
-@app.options("/api/recommend/")
-def options_recommend():
+# 💡 關鍵 3：攔截 OPTIONS 預檢請求，直接回傳 200，絕不允許轉址
+@app.options("/{full_path:path}")
+def options_handler(full_path: str):
     return Response(status_code=200)
 
-
+# 💡 關鍵 4：同時綁定有斜線與無斜線的路徑
 @app.post("/api/recommend")
 @app.post("/api/recommend/")
 def recommend_products(req: RecommendationRequest):
@@ -92,7 +90,6 @@ def recommend_products(req: RecommendationRequest):
         raise HTTPException(status_code=400, detail="Products list must contain at least 3 items.")
 
     return get_ai_recommendations_from_hf(req.products, req.preferences)
-
 
 @app.get("/api/recommend")
 @app.get("/api/recommend/")
