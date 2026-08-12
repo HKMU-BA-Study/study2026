@@ -2,7 +2,7 @@ import os
 import json
 import re
 from typing import List, Dict, Any
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from huggingface_hub import InferenceClient
@@ -14,18 +14,17 @@ MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 client = InferenceClient(token=HF_TOKEN)
 
-# 💡 關閉預設斜線重定向
+# 💡 開啟 redirect_slashes 避免轉址問題
 app = FastAPI(
-    title="Study 2 AI Nudging API",
-    redirect_slashes=False
+    title="Study 2 AI Nudging API"
 )
 
-# 💡 設定 CORS 允許 OPTIONS 與 POST
+# 💡 CORS 設定
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -79,7 +78,13 @@ Output MUST be a valid JSON array:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# 💡 精準配置無斜線與有斜線的路徑，確保不會觸發 307/308 Redirect
+# 💡 顯式回覆 OPTIONS Preflight 請求，杜絕 308 轉址
+@app.options("/api/recommend")
+@app.options("/api/recommend/")
+def options_recommend():
+    return Response(status_code=200)
+
+
 @app.post("/api/recommend")
 @app.post("/api/recommend/")
 def recommend_products(req: RecommendationRequest):
